@@ -1,6 +1,7 @@
 import { Quote } from "src/quote/entities/quote.entity";
-import { Column, JoinColumn, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
+@Entity()
 export class Theme {
   @PrimaryGeneratedColumn()
   id: number;

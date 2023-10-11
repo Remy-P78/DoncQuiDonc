@@ -2,8 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { QuoteService } from './quote.service';
 import { CreateQuoteDto } from './dto/create-quote.dto';
 import { UpdateQuoteDto } from './dto/update-quote.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('quote')
+@ApiTags('Quote')
 export class QuoteController {
   constructor(private readonly quoteService: QuoteService) {}
 

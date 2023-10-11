@@ -1,7 +1,8 @@
 import { Member } from "src/member/entities/member.entity";
 import { Quote } from "src/quote/entities/quote.entity";
-import { Column, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 
+@Entity()
 export class Comment {
   @PrimaryGeneratedColumn()
   id: number;

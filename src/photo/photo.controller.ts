@@ -2,8 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { PhotoService } from './photo.service';
 import { CreatePhotoDto } from './dto/create-photo.dto';
 import { UpdatePhotoDto } from './dto/update-photo.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('photo')
+@ApiTags('Photo')
 export class PhotoController {
   constructor(private readonly photoService: PhotoService) {}
 

@@ -2,8 +2,9 @@ import { Author } from "src/author/entities/author.entity";
 import { Member } from "src/member/entities/member.entity";
 import { Theme } from "src/theme/entities/theme.entity";
 import { Comment } from "src/comment/entities/comment.entity";
-import { Column, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
+@Entity()
 export class Quote {
   @PrimaryGeneratedColumn()
   id: number;

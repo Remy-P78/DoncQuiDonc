@@ -1,7 +1,8 @@
 import { Photo } from "src/photo/entities/photo.entity";
 import { Quote } from "src/quote/entities/quote.entity";
-import { Column, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
+@Entity()
 export class Author {
   @PrimaryGeneratedColumn()
   id: number;

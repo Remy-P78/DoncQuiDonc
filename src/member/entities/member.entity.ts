@@ -3,8 +3,9 @@ import { Quote } from 'src/quote/entities/quote.entity';
 import { Result } from 'src/result/entities/result.entity';
 import { Role } from 'src/role/entities/role.entity';
 import { Comment } from 'src/comment/entities/comment.entity';
-import { Column, JoinColumn, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
+@Entity()
 export class Member {
   @PrimaryGeneratedColumn()
   id: number;

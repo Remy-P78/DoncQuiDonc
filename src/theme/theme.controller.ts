@@ -2,8 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { ThemeService } from './theme.service';
 import { CreateThemeDto } from './dto/create-theme.dto';
 import { UpdateThemeDto } from './dto/update-theme.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('theme')
+@ApiTags('Theme')
 export class ThemeController {
   constructor(private readonly themeService: ThemeService) {}
 

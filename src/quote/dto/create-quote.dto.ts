@@ -1,1 +1,3 @@
-export class CreateQuoteDto {}
+export class CreateQuoteDto {
+    
+}

@@ -1,6 +1,7 @@
 import { Member } from "src/member/entities/member.entity";
-import { Column, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
+@Entity()
 export class Result {
   @PrimaryGeneratedColumn()
   id: number;
@@ -15,6 +16,6 @@ export class Result {
   id_member: number;
 
   @ManyToOne(() => Member, (member) => member.result)
-  @JoinColumn({name:'id_member'})
+  @JoinColumn({ name: 'id_member' })
   member: Member;
 }
