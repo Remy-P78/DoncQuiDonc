@@ -35,7 +35,10 @@ export class Member {
   @JoinColumn({ name: 'id_photo' })
   photo: Photo;
 
-  @OneToMany(() => Result, (result) => result.member)
+  @OneToMany(() => Result, (result) => result.member, {
+    eager: true,
+    cascade: true,
+  })
   @JoinColumn({ name: 'id_member' })
   result: Result;
 
