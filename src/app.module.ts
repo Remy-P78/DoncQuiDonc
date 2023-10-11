@@ -19,6 +19,7 @@ import { QuoteModule } from './quote/quote.module';
 import { Quote } from './quote/entities/quote.entity';
 import { CommentModule } from './comment/comment.module';
 import { Comment } from './comment/entities/comment.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { Comment } from './comment/entities/comment.entity';
     ResultModule,
     QuoteModule,
     CommentModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
