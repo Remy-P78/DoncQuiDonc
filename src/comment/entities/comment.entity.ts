@@ -10,11 +10,11 @@ export class Comment {
   @Column({ type: 'text' })
   comment: string;
 
-  @ManyToMany(() => Quote, (quote) => quote.comments)
-  @JoinTable()
-  quote: Quote;
+  // @ManyToMany(() => Quote, (quote) => quote.comments)
+  // @JoinTable()
+  // quote: Quote;
 
-  @ManyToMany(() => Member, (member) => member.comments)
-  @JoinTable()
-  member: Member;
+  // @ManyToMany(() => Member, (member) => member.comments)
+  // @JoinTable()
+  // member: Member;
 }

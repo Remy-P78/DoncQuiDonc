@@ -39,9 +39,9 @@ export class Member {
   @JoinColumn({ name: 'id_member' })
   result: Result;
 
-  @ManyToMany(() => Quote, (quote) => quote.favoritedBy)
-  favoriteQuotes: Quote[];
+  // @ManyToMany(() => Quote, (quote) => quote.favoritedBy)
+  // favoriteQuotes: Quote[];
 
-  @ManyToMany(() => Comment, (comment) => comment.member)
-  comments: Comment[];
+  // @ManyToMany(() => Comment, (comment) => comment.member)
+  // comments: Comment[];
 }

@@ -12,6 +12,9 @@ export class Quote {
   @Column({ type: 'text' })
   text: string;
 
+  @Column({ type: 'boolean' })
+  valide: boolean;
+
   @Column({ type: 'integer' })
   id_author: number;
 
@@ -30,10 +33,10 @@ export class Quote {
   @JoinColumn({ name: 'id_theme' })
   theme: Theme;
 
-  @ManyToMany(() => Member, (member) => member.favoriteQuotes)
-  @JoinTable()
-  favoritedBy: Member[];
+  // @ManyToMany(() => Member, (member) => member.favoriteQuotes)
+  // @JoinTable()
+  // favoritedBy: Member[];
 
-  @ManyToMany(() => Comment, (comment) => comment.quote)
-  comments: Comment[];
+  // @ManyToMany(() => Comment, (comment) => comment.quote)
+  // comments: Comment[];
 }
