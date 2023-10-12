@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { QuoteService } from './quote.service';
 import { CreateQuoteDto } from './dto/create-quote.dto';
 import { UpdateQuoteDto } from './dto/update-quote.dto';
@@ -33,4 +42,11 @@ export class QuoteController {
   remove(@Param('id') id: string) {
     return this.quoteService.remove(+id);
   }
+}
+function GetUser(): (
+  target: QuoteController,
+  propertyKey: 'create',
+  parameterIndex: 1,
+) => void {
+  throw new Error('Function not implemented.');
 }

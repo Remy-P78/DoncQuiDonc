@@ -5,9 +5,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Quote } from './entities/quote.entity';
 import { Repository } from 'typeorm';
 
+
 @Injectable()
 export class QuoteService {
   constructor(@InjectRepository(Quote) private quoteRepository: Repository<Quote>){}
+
   async create(createQuoteDto: CreateQuoteDto) {
     const newQuote = this.quoteRepository.create(createQuoteDto);
     const result = await this.quoteRepository.save(newQuote);

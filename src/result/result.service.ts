@@ -4,13 +4,14 @@ import { UpdateResultDto } from './dto/update-result.dto';
 import { Result } from './entities/result.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Member } from 'src/member/entities/member.entity';
 
 @Injectable()
 export class ResultService {
   constructor(
     @InjectRepository(Result) private resultRepository: Repository<Result>,
   ) {}
-  async create(createResultDto: CreateResultDto) {
+  async create(createResultDto: CreateResultDto, member:Member) {
     const newResult = this.resultRepository.create(createResultDto);
     const result = await this.resultRepository.save(newResult);
     return result;

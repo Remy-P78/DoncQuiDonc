@@ -1,8 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { ResultService } from './result.service';
 import { CreateResultDto } from './dto/create-result.dto';
 import { UpdateResultDto } from './dto/update-result.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
+import { Member } from 'src/member/entities/member.entity';
+import { GetMember } from 'src/auth/get-member.decorator';
 
 @Controller('result')
 @ApiTags('Result')
@@ -10,8 +13,9 @@ export class ResultController {
   constructor(private readonly resultService: ResultService) {}
 
   @Post()
-  create(@Body() createResultDto: CreateResultDto) {
-    return this.resultService.create(createResultDto);
+  @UseGuards(AuthGuard())
+  create(@Body() createResultDto: CreateResultDto, @GetMember() member: Member) {
+    return this.resultService.create(createResultDto, member);
   }
 
   @Get()
