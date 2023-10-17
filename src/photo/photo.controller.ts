@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { PhotoService } from './photo.service';
 import { CreatePhotoDto } from './dto/create-photo.dto';
 import { UpdatePhotoDto } from './dto/update-photo.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('photo')
 @ApiTags('Photo')
@@ -10,8 +11,10 @@ export class PhotoController {
   constructor(private readonly photoService: PhotoService) {}
 
   @Post()
-  create(@Body() createPhotoDto: CreatePhotoDto) {
-    return this.photoService.create(createPhotoDto);
+  @UseInterceptors(FileInterceptor('monFichier')) 
+    uploadImage(@UploadedFile() file: Express.Multer.File) {
+    console.log("inController", file);
+    return this.photoService.create(file);
   }
 
   @Get()
