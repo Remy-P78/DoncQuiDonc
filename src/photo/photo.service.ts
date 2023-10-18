@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { CreatePhotoDto } from './dto/create-photo.dto';
+import { Injectable, NotFoundException, StreamableFile } from '@nestjs/common';
 import { UpdatePhotoDto } from './dto/update-photo.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Photo } from './entities/photo.entity';
 import { Repository } from 'typeorm';
+import { createReadStream } from 'fs';
+import { join } from 'path';
 
 @Injectable()
 export class PhotoService {
@@ -21,11 +22,21 @@ export class PhotoService {
   }
 
   findAll() {
+    
     return `This action returns all photo`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} photo`;
+  async getImageById(id: number, res): Promise<StreamableFile> {
+    const result = await this.photoRepository.findOneBy({ id });
+    if (!result) {
+      throw new NotFoundException(`The photo ${id} is not found !`);
+    }
+    const imageFile = createReadStream(
+      join(process.cwd(), 'uploads', result.name),
+    );
+    res.set('Content-Type', result.mimetype);
+    console.log('mon image', imageFile);
+    return new StreamableFile(imageFile);
   }
 
   update(id: number, updatePhotoDto: UpdatePhotoDto) {

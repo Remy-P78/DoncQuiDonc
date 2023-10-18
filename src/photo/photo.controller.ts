@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, Res, StreamableFile } from '@nestjs/common';
 import { PhotoService } from './photo.service';
 import { CreatePhotoDto } from './dto/create-photo.dto';
 import { UpdatePhotoDto } from './dto/update-photo.dto';
@@ -11,9 +11,9 @@ export class PhotoController {
   constructor(private readonly photoService: PhotoService) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor('monFichier')) 
-    uploadImage(@UploadedFile() file: Express.Multer.File) {
-    console.log("inController", file);
+  @UseInterceptors(FileInterceptor('monFichier'))
+  uploadImage(@UploadedFile() file: Express.Multer.File) {
+    console.log('inController', file);
     return this.photoService.create(file);
   }
 
@@ -23,8 +23,11 @@ export class PhotoController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.photoService.findOne(+id);
+  getImageById(
+    @Param('id') id: string,
+    @Res({ passthrough: true }) res,
+  ): Promise<StreamableFile> {
+    return this.photoService.getImageById(+id, res);
   }
 
   @Patch(':id')
