@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, Res, StreamableFile } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, Res, StreamableFile, Put } from '@nestjs/common';
 import { PhotoService } from './photo.service';
 import { CreatePhotoDto } from './dto/create-photo.dto';
 import { UpdatePhotoDto } from './dto/update-photo.dto';
@@ -13,7 +13,6 @@ export class PhotoController {
   @Post()
   @UseInterceptors(FileInterceptor('monFichier'))
   uploadImage(@UploadedFile() file: Express.Multer.File) {
-    console.log('inController', file);
     return this.photoService.create(file);
   }
 
@@ -31,8 +30,13 @@ export class PhotoController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePhotoDto: UpdatePhotoDto) {
-    return this.photoService.update(+id, updatePhotoDto);
+  @UseInterceptors(FileInterceptor('monFichier'))
+  update(    
+    @Param('id') id: number,
+    @UploadedFile() 
+    file: Express.Multer.File,
+  ) {
+    return this.photoService.update(+id, file);
   }
 
   @Delete(':id')

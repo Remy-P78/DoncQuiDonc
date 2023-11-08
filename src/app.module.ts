@@ -33,7 +33,7 @@ import { AuthModule } from './auth/auth.module';
       database: process.env.POSTGRES_DATABASE,
       entities: [Author, Comment, Member, Quote, Photo, Result, Role, Theme],
       synchronize: false,
-      logging: false,
+      logging: true,
     }),
     AuthorModule,
     PhotoModule,

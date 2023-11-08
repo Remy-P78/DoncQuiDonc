@@ -1,4 +1,6 @@
+
 import { ApiProperty } from "@nestjs/swagger";
+import { IsOptional } from "class-validator";
 
 export class CreateMemberDto {
   @ApiProperty()
@@ -15,4 +17,7 @@ export class CreateMemberDto {
 
   @ApiProperty()
   id_photo: number;
+
+  @IsOptional()
+  result: any
 }

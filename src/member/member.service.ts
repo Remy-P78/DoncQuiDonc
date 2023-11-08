@@ -21,7 +21,7 @@ export class MemberService {
   }
 
   async findOne(id: number) {
-     const found = await this.memberRepository.findOneBy({ id });
+     const found = await this.memberRepository.findOneBy({ id });     
      if (!found) {
        throw new NotFoundException(
          `The member with id number ${id} is not found !`,

@@ -5,10 +5,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Quote } from './entities/quote.entity';
 import { Repository } from 'typeorm';
 
-
 @Injectable()
 export class QuoteService {
-  constructor(@InjectRepository(Quote) private quoteRepository: Repository<Quote>){}
+  constructor(
+    @InjectRepository(Quote) private quoteRepository: Repository<Quote>,
+  ) {}
 
   async create(createQuoteDto: CreateQuoteDto) {
     const newQuote = this.quoteRepository.create(createQuoteDto);
@@ -38,11 +39,18 @@ export class QuoteService {
   async remove(id: number) {
     const quoteToRemove = await this.findOne(id);
     if (!quoteToRemove) {
-      throw new Error(
-        `The quote with id number: ${id} is not found !`,
-      );
+      throw new Error(`The quote with id number: ${id} is not found !`);
     }
     await this.quoteRepository.remove(quoteToRemove);
     return { message: `The quote ${id} is deleted !` };
+  }
+
+  async findValidQuotes() {
+    const validQuotes = await this.quoteRepository
+      .createQueryBuilder('quote')
+      .where('quote.valide = :valide', { valide: true })
+      .getMany();
+
+    return validQuotes;
   }
 }

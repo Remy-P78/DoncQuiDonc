@@ -27,21 +27,29 @@ export class QuoteController {
   findAll() {
     return this.quoteService.findAll();
   }
+  
+  @Get('valid')
+  async findValidQuotes() {
+    const validQuotes = await this.quoteService.findValidQuotes();
+    return validQuotes;
+  }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: number) {
     return this.quoteService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateQuoteDto: UpdateQuoteDto) {
+  update(@Param('id') id: number, @Body() updateQuoteDto: UpdateQuoteDto) {
     return this.quoteService.update(+id, updateQuoteDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: number) {
     return this.quoteService.remove(+id);
   }
+
+  
 }
 function GetUser(): (
   target: QuoteController,

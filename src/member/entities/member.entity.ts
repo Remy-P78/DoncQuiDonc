@@ -38,6 +38,8 @@ export class Member {
   @OneToMany(() => Result, (result) => result.member, {
     eager: true,
     cascade: true,
+    // onDelete: 'CASCADE',
+    // onUpdate: 'CASCADE',
   })
   @JoinColumn({ name: 'id_member' })
   result: Result;
