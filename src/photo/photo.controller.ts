@@ -1,9 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, Res, StreamableFile, Put } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Param, Delete, UseInterceptors, UploadedFile, Res, StreamableFile, UseGuards } from '@nestjs/common';
 import { PhotoService } from './photo.service';
-import { CreatePhotoDto } from './dto/create-photo.dto';
-import { UpdatePhotoDto } from './dto/update-photo.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('photo')
 @ApiTags('Photo')
@@ -30,10 +29,11 @@ export class PhotoController {
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard())
   @UseInterceptors(FileInterceptor('monFichier'))
-  update(    
+  update(
     @Param('id') id: number,
-    @UploadedFile() 
+    @UploadedFile()
     file: Express.Multer.File,
   ) {
     return this.photoService.update(+id, file);

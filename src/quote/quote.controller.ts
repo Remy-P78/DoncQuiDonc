@@ -12,6 +12,7 @@ import { QuoteService } from './quote.service';
 import { CreateQuoteDto } from './dto/create-quote.dto';
 import { UpdateQuoteDto } from './dto/update-quote.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('quote')
 @ApiTags('Quote')
@@ -27,7 +28,7 @@ export class QuoteController {
   findAll() {
     return this.quoteService.findAll();
   }
-  
+
   @Get('valid')
   async findValidQuotes() {
     const validQuotes = await this.quoteService.findValidQuotes();
@@ -40,16 +41,16 @@ export class QuoteController {
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard())
   update(@Param('id') id: number, @Body() updateQuoteDto: UpdateQuoteDto) {
     return this.quoteService.update(+id, updateQuoteDto);
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard())
   remove(@Param('id') id: number) {
     return this.quoteService.remove(+id);
   }
-
-  
 }
 function GetUser(): (
   target: QuoteController,

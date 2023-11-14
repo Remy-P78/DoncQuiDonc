@@ -3,6 +3,7 @@ import { AuthorService } from './author.service';
 import { CreateAuthorDto } from './dto/create-author.dto';
 import { UpdateAuthorDto } from './dto/update-author.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
 
 @Controller('author')
@@ -31,6 +32,7 @@ export class AuthorController {
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard())
   remove(@Param('id') id: string) {
     return this.authorService.remove(+id);
   }

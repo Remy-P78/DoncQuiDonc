@@ -1,26 +1,20 @@
 import { Injectable } from '@nestjs/common';
-import { CreateThemeDto } from './dto/create-theme.dto';
-import { UpdateThemeDto } from './dto/update-theme.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Theme } from './entities/theme.entity';
+import { Repository } from 'typeorm';
+
 
 @Injectable()
 export class ThemeService {
-  create(createThemeDto: CreateThemeDto) {
-    return 'This action adds a new theme';
-  }
+  constructor(
+    @InjectRepository(Theme) private themeRepository: Repository<Theme>,
+  ) {}
 
-  findAll() {
-    return `This action returns all theme`;
+  async findAll() {
+    return await this.themeRepository.find();
   }
 
   findOne(id: number) {
     return `This action returns a #${id} theme`;
-  }
-
-  update(id: number, updateThemeDto: UpdateThemeDto) {
-    return `This action updates a #${id} theme`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} theme`;
   }
 }

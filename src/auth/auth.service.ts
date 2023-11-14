@@ -51,9 +51,14 @@ export class AuthService {
     const member = await this.memberRepository.findOneBy({ username });
 
     if (member && (await bcrypt.compare(password, member.password))) {
-      const payload = { username: member.username, member_id: member.id };
+      const payload = { username: member.username, member_id: member.id, role_id: member.id_role };
       const accessToken = this.jwtService.sign(payload);
-      return { accessToken, member_id: member.id, username: member.username };
+      return {
+        accessToken,
+        member_id: member.id,
+        username: member.username,
+        role_id: member.id_role,
+      };
     } else {
       throw new UnauthorizedException(
         'Ces identifiants ne sont pas bons.',
