@@ -4,10 +4,11 @@ import { AuthorController } from './author.controller';
 import { Author } from './entities/author.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
+import { HttpModule } from '@nestjs/axios';
 
 
 @Module({
-  imports: [
+  imports: [HttpModule,
     TypeOrmModule.forFeature([Author]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
   ],

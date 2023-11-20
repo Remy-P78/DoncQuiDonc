@@ -40,6 +40,7 @@ export class PhotoController {
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard())
   remove(@Param('id') id: string) {
     return this.photoService.remove(+id);
   }

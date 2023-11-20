@@ -12,4 +12,8 @@ export class CreateAuthorDto {
 
   @ApiProperty()
   id_photo?: number;
+
+  @ApiProperty()
+  recaptchaToken?: string;
+  
 }
