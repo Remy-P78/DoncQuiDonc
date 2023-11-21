@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Author } from './entities/author.entity';
 import { Repository } from 'typeorm';
 import { HttpService } from '@nestjs/axios';
-import { map } from 'rxjs';
+import { map, lastValueFrom } from 'rxjs';
 
 @Injectable()
 export class AuthorService {
@@ -51,7 +51,7 @@ export class AuthorService {
 
       if (recaptchaResponse.success === true) {
         const newAuthor = this.authorRepository.create(
-          this.processAuthor(createAuthorDto),
+          createAuthorDto.author
         );
         const result = await this.authorRepository.save(newAuthor);
         return result;
@@ -67,19 +67,12 @@ export class AuthorService {
 
   //Vérification captcha
   async verifyRecaptcha(recaptchaToken: string): Promise<any> {
-    const response = await this.http
+    const response = await lastValueFrom(this.http
       .get(        
         `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.SECRET_KEY_CAPTCHA}&response=${recaptchaToken}`,
       )
-      .pipe(map((res) => res.data))
-      .toPromise();
+      .pipe(map((res) => res.data)))
 
     return response;
-  }
-
-  //destructuration du dto et sortie du createAuthorDto qui n'a pas de propriétés author
-  processAuthor(dto) {
-    const { recaptchaToken, ...author } = dto;
-    return { ...author.author };
   }
 }

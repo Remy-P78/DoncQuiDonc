@@ -1,19 +1,10 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { Author } from "../entities/author.entity";
 
 export class CreateAuthorDto {
   @ApiProperty()
-  name: string;
+  author: Author
 
   @ApiProperty()
-  description: string;
-
-  @ApiProperty()
-  biography: string;
-
-  @ApiProperty()
-  id_photo?: number;
-
-  @ApiProperty()
-  recaptchaToken?: string;
-  
+  recaptchaToken?: string;  
 }
