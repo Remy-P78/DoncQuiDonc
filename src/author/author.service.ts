@@ -43,16 +43,14 @@ export class AuthorService {
   }
 
   async create(createAuthorDto: CreateAuthorDto) {
-   
     try {
       const recaptchaResponse = await this.verifyRecaptcha(
         createAuthorDto.recaptchaToken,
       );
 
       if (recaptchaResponse.success === true) {
-        const newAuthor = this.authorRepository.create(
-          createAuthorDto.author
-        );
+        
+        const newAuthor = this.authorRepository.create(createAuthorDto.author);
         const result = await this.authorRepository.save(newAuthor);
         return result;
       } else {
@@ -67,12 +65,23 @@ export class AuthorService {
 
   //Vérification captcha
   async verifyRecaptcha(recaptchaToken: string): Promise<any> {
-    const response = await lastValueFrom(this.http
-      .get(        
-        `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.SECRET_KEY_CAPTCHA}&response=${recaptchaToken}`,
-      )
-      .pipe(map((res) => res.data)))
+    const response = await lastValueFrom(
+      this.http
+        .get(
+          `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.SECRET_KEY_CAPTCHA}&response=${recaptchaToken}`,
+        )
+        .pipe(map((res) => res.data)),
+    );
 
     return response;
+  }
+
+  async findValidAuthors() {
+    const validQuotes = await this.authorRepository
+      .createQueryBuilder('author')
+      .where('author.description != :description', { description: "A valider" })
+      .getMany();
+
+    return validQuotes;
   }
 }

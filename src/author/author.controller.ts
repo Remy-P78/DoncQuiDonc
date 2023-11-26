@@ -21,6 +21,13 @@ export class AuthorController {
     return this.authorService.findAll();
   }
 
+  @Get('valid')
+  // @UseGuards(AuthGuard())
+  async findValidAuthors() {
+    const validAuthors = await this.authorService.findValidAuthors();
+    return validAuthors;
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.authorService.findOne(+id);

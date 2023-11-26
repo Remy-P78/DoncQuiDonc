@@ -54,5 +54,12 @@ export class QuoteService {
     return validQuotes;
   }
 
+  async findUnvalidQuotes() {
+    const unvalidQuotes = await this.quoteRepository
+      .createQueryBuilder('quote')
+      .where('quote.valide = :valide', { valide: false })
+      .getMany();
 
+    return unvalidQuotes;
+  }
 }

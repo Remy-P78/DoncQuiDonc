@@ -25,17 +25,27 @@ export class QuoteController {
   }
 
   @Get()
+  @UseGuards(AuthGuard())
   findAll() {
     return this.quoteService.findAll();
   }
 
   @Get('valid')
+  @UseGuards(AuthGuard())
   async findValidQuotes() {
     const validQuotes = await this.quoteService.findValidQuotes();
     return validQuotes;
   }
 
+  @Get('unvalid')
+  @UseGuards(AuthGuard())
+  async findUnvalidQuotes() {
+    const unvalidQuotes = await this.quoteService.findUnvalidQuotes();
+    return unvalidQuotes;
+  }
+
   @Get(':id')
+  @UseGuards(AuthGuard())
   findOne(@Param('id') id: number) {
     return this.quoteService.findOne(+id);
   }
