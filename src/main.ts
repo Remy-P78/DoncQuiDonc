@@ -12,6 +12,7 @@ async function bootstrap() {
     origin: '*', // Domaine que vous souhaitez autoriser
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true, // autorise requete avec token etc..
+    allowedHeaders: 'Origin, Content-Type, X-Auth-Token', // Ajoutez les en-têtes que vous autorisez
   };
 
   app.enableCors(corsOptions); // Mise en place de Cors selon les options
