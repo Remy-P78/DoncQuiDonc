@@ -79,7 +79,8 @@ export class AuthorService {
   async findValidAuthors() {
     const validQuotes = await this.authorRepository
       .createQueryBuilder('author')
-      .where('author.description != :description', { description: "A valider" })
+      .where('author.description != :description', { description: 'A valider' })
+      .leftJoinAndSelect('author.photo', 'photo')
       .getMany();
 
     return validQuotes;

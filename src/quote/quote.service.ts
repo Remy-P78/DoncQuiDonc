@@ -4,6 +4,7 @@ import { UpdateQuoteDto } from './dto/update-quote.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Quote } from './entities/quote.entity';
 import { Repository } from 'typeorm';
+import { Author } from 'src/author/entities/author.entity';
 
 @Injectable()
 export class QuoteService {
@@ -11,10 +12,26 @@ export class QuoteService {
     @InjectRepository(Quote) private quoteRepository: Repository<Quote>,
   ) {}
 
+  // async create(createQuoteDto: CreateQuoteDto) {
+  //   const newQuote = this.quoteRepository.create(createQuoteDto);
+  //   const result = await this.quoteRepository.save(newQuote);
+  //   return result;
+  // }
+
   async create(createQuoteDto: CreateQuoteDto) {
-    const newQuote = this.quoteRepository.create(createQuoteDto);
-    const result = await this.quoteRepository.save(newQuote);
-    return result;
+    try {
+      const newQuote = this.quoteRepository.create(createQuoteDto);
+      const result = await this.quoteRepository.save(newQuote);
+      return result;
+    } catch (error) {
+      console.error(
+        "Une erreur s'est produite lors de la création de la citation :",
+        error.message,
+      );
+      throw new Error(
+        "Une erreur s'est produite.",
+      );
+    }
   }
 
   async findAll() {
@@ -49,6 +66,7 @@ export class QuoteService {
     const validQuotes = await this.quoteRepository
       .createQueryBuilder('quote')
       .where('quote.valide = :valide', { valide: true })
+      .leftJoinAndSelect('quote.author', 'author')
       .getMany();
 
     return validQuotes;
@@ -57,6 +75,7 @@ export class QuoteService {
   async findUnvalidQuotes() {
     const unvalidQuotes = await this.quoteRepository
       .createQueryBuilder('quote')
+      .leftJoinAndSelect('quote.author', 'author')
       .where('quote.valide = :valide', { valide: false })
       .getMany();
 

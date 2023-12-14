@@ -19,13 +19,13 @@ import { AuthGuard } from '@nestjs/passport';
 export class QuoteController {
   constructor(private readonly quoteService: QuoteService) {}
 
-  @Post()
+  @Post()  
   create(@Body() createQuoteDto: CreateQuoteDto) {
     return this.quoteService.create(createQuoteDto);
   }
 
   @Get()
-  @UseGuards(AuthGuard())
+  // @UseGuards(AuthGuard())
   findAll() {
     return this.quoteService.findAll();
   }
@@ -38,7 +38,7 @@ export class QuoteController {
   }
 
   @Get('unvalid')
-  @UseGuards(AuthGuard())
+  // @UseGuards(AuthGuard())
   async findUnvalidQuotes() {
     const unvalidQuotes = await this.quoteService.findUnvalidQuotes();
     return unvalidQuotes;
