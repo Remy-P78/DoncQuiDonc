@@ -21,15 +21,15 @@ export class ResultService {
     return await this.resultRepository.find();
   }
 
-  async findOne(id: number) {
-    const found = await this.resultRepository.findOneBy({ id });
-    if (!found) {
-      throw new NotFoundException(
-        `The result with id number ${id} is not found !`,
-      );
-    }
-    return found;
-  }
+  // async findOne(id: number) {
+  //   const found = await this.resultRepository.findOneBy({ id });
+  //   if (!found) {
+  //     throw new NotFoundException(
+  //       `The result with id number ${id} is not found !`,
+  //     );
+  //   }
+  //   return found;
+  // }
 
   update(id: number, updateResultDto: UpdateResultDto) {
     return `This action updates a #${id} result`;
@@ -37,5 +37,15 @@ export class ResultService {
 
   remove(id: number) {
     return `This action removes a #${id} result`;
+  }
+
+  async findAllByMember(id:number){
+const resultById = await this.resultRepository
+  .createQueryBuilder('result')
+  // .leftJoinAndSelect('result.member', 'member')
+  .where('result.id_member = :id', {id})
+  .getMany();
+
+return resultById;
   }
 }

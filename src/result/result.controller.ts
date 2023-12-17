@@ -25,7 +25,7 @@ export class ResultController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.resultService.findOne(+id);
+    return this.resultService.findAllByMember(+id);
   }
 
   @Patch(':id')
